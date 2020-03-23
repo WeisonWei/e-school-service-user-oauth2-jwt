@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.es</groupId>
-    <artifactId>e-school-user-service-oauth2-jwt</artifactId>
+    <artifactId>e-school-service-user-oauth2-jwt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>e-school-user-service-oauth2-jwt</name>
+    <name>e-school-service-user-oauth2-jwt</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
