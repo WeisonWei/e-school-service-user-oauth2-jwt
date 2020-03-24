@@ -15,7 +15,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +41,7 @@ public abstract class BaseEntity implements Serializable {
 
     @Id
     @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
@@ -79,29 +78,6 @@ public abstract class BaseEntity implements Serializable {
     public BaseEntity update() {
         setUpdated(System.currentTimeMillis());
         return this;
-    }
-
-    @Deprecated
-    public <T extends BaseEntity> T toEntity() {
-        Type genericSuperclass = this.getClass().getGenericSuperclass();
-        Class<T> clazz = (Class<T>) genericSuperclass;
-        return toEntity(clazz);
-    }
-
-    public <T extends BaseEntity> T toModel() {
-        String modelName = this.getClass().getName().replace(".entity.", ".model.");
-        try {
-            Class<T> modelClass = null;
-            modelClass = (Class<T>) Class.forName(modelName);
-            return toEntity(modelClass);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return toEntity();
-    }
-
-    public <T> T toEntity(Class<T> cls) {
-        return clone(cls);
     }
 
     public <T> T append(Object append) {
