@@ -1,0 +1,23 @@
+# Actuator
+management:
+  health:
+    rabbit:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
+spring:
+  # Datasource
+  datasource:
+    platform: ${SERVICE_DATASOURCE_PLATFORM:h2}
+    url: ${SCHOOL_DATASOURCE_URL:jdbc:h2:mem:task;MODE=MySQL}
+    username: ${SCHOOL_DATASOURCE_USERNAME:sa}
+    password: ${SCHOOL_DATASOURCE_PASSWORD:123123}
+    driver-class-name: ${SCHOOL_DATASOURCE_DRIVER:org.h2.Driver}

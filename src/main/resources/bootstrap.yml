@@ -1,0 +1,12 @@
+server:
+  port: 8082
+
+# Spring
+spring:
+  application:
+    name: e-school-service-user-oauth2-resource
+  main:
+    allow-bean-definition-overriding: true
+
+
+
