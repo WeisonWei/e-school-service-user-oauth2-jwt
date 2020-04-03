@@ -1,3 +1,4 @@
+# eureka
 eureka:
   instance:
     prefer-ip-address: true
@@ -13,9 +14,31 @@ eureka:
       #defaultZone: http://discovery:8761/eureka
       defaultZone: http://localhost:8761/eureka
 
+# Actuator
+management:
+  health:
+    rabbit:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
 
-
+# Spring
 spring:
+  application:
+    name: e-school-service-account
+  main:
+    allow-bean-definition-overriding: true
+  boot:
+    admin:
+      url: http://localhost:${server.port}
+
   # Datasource
   datasource:
     platform: ${SERVICE_DATASOURCE_PLATFORM:h2}
@@ -24,6 +47,14 @@ spring:
     password: ${SCHOOL_DATASOURCE_PASSWORD:123123}
     driver-class-name: ${SCHOOL_DATASOURCE_DRIVER:org.h2.Driver}
 
+  # Rabbitmq
+  rabbitmq:
+    host: ${SCHOOL_RABBITMQ_HOST:localhost}
+    port: ${SCHOOL_RABBITMQ_PORT:5672}
+    username: ${SCHOOL_RABBITMQ_USERNAME:admin}
+    password: ${SCHOOL_RABBITMQ_PASSWORD:123123}
+    virtual-host: ${SCHOOL_RABBITMQ_VIRTUAL_HOST:demo}
+    
   # Zipkin
   zipkin:
     base-url: ${SCHOOL_ZIPKIN:http://localhost:9411/}
@@ -49,6 +80,13 @@ spring:
 
   # Cloud
   cloud:
+    config:
+      label: master
+      uri: ${SCHOOL_CONFIG:http://localhost:8888/}
+      inetutils:
+        ignored-interfaces: ${INTUTILS_IGNORED_INTERFACES:^io,^vbox,^utun,^ll,^aw,^p2p,^bridge}
+        preferred-networks: ${INTUTILS_PREFERRED_NETWORKS:192.168,172.68}
+
     stream:
       default-binder: rabbit1
       bindings:
@@ -71,18 +109,3 @@ spring:
                 password: ${SCHOOL_RABBITMQ_PASSWORD:123123}
                 virtual-host: ${SCHOOL_RABBITMQ_VIRTUAL_HOST:demo}
 
-  application:
-    name: e-school-service-user-oauth2-resource
-  main:
-    allow-bean-definition-overriding: true
-  boot:
-    admin:
-      url: http://localhost:${server.port}
-
-  cloud:
-    config:
-      label: master
-      uri: ${SCHOOL_CONFIG:http://localhost:8888/}
-    inetutils:
-      ignored-interfaces: ${INTUTILS_IGNORED_INTERFACES:^io,^vbox,^utun,^ll,^aw,^p2p,^bridge}
-      preferred-networks: ${INTUTILS_PREFERRED_NETWORKS:192.168,172.68}
